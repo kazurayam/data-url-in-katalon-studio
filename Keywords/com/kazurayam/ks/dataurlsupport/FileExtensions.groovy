@@ -4,7 +4,7 @@ import com.google.common.net.MediaType
 
 public class FileExtensions {
 
-	private static Map<MediaType, FileExtension> fileExtensions
+	private static Map<MediaType, FileExtension> fileExtensions = new HashMap()
 
 	static {
 		// https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
@@ -16,7 +16,7 @@ public class FileExtensions {
 		fileExtensions.put(MediaType.ZIP,				new FileExtension('zip',	"ZIP archive"))
 	}
 
-	static get(MediaType mediaType) {
+	static FileExtension get(MediaType mediaType) {
 		return fileExtensions.get(mediaType)
 	}
 

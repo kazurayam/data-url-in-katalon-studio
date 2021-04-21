@@ -9,28 +9,32 @@ import javax.xml.bind.DatatypeConverter;
 // enum of MIME TYPEs maintained, see https://guava.dev/releases/17.0/api/docs/com/google/common/net/MediaType.html
 import com.google.common.net.MediaType
 
-public class Main {
+public class UsageExample {
 
 	public static void main(String[] args) throws Exception {
-		Main instance = new Main()
+		UsageExample instance = new UsageExample()
 		instance.execute()
 	}
 
-	public Main() {}
+	public UsageExample() {}
 
 	public void execute() throws Exception {
 		// create a demo image
 		BufferedImage image = createDemoImage()
 		// convert the image to a dataURL
-		String dataURL = Converter.toPng(image)
+		DataURL dataURL = DataURLFactory.toImageDataURL(MediaType.PNG, image)
 
 		// write the HTML which renders the dataURL of PNG
+		/*
+		String html = "<html><body><img src='" + dataURL.toString() + "'></body></html>"
 		File f = new File("image.html")
 		FileWriter fw = new FileWriter(f)
-		String html = "<html><body><img src='" + dataURL + "'></body></html>"
 		fw.write(html)
 		fw.flush()
 		fw.close()
+		 */
+		File f = dataURL.toTempFile()
+		
 		// display the HTML
 		Desktop.getDesktop().open(f);
 	}

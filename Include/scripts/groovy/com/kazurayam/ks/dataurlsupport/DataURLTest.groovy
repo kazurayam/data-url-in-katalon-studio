@@ -16,10 +16,10 @@ class DataURLTest {
 	void test_parse_html_utf8() {
 		String input = "data:text/html;charset=utf-8,<div>Hello, World!</div>"
 		DataURL dataurl = DataURL.parse(input)
-	    MediaType expectedMediatype = MediaType.parse('text/html; charset=utf-8')
+		MediaType expectedMediatype = MediaType.parse('text/html; charset=utf-8')
 		assertThat(dataurl.toString(), dataurl.getMediaType(), is(expectedMediatype))
 		assertThat(dataurl.toString(), dataurl.getMediaType().charset().isPresent(), is(true))
-		assertThat(dataurl.toString(), dataurl.getMediaType().charset().get().toString(), is('UTF-8'))
+		assertThat(dataurl.toString(), dataurl.getMediaType().charset().get().toString().toLowerCase(), is('utf-8'))
 		assertThat(dataurl.toString(), dataurl.isBase64encoded(), is(false))
 		String expectedData = '<div>Hello, World!</div>'
 		assertThat(dataurl.toString(), dataurl.getData(), is(expectedData))
@@ -42,7 +42,7 @@ class DataURLTest {
 		String input = "data:text/html;charset=utf-8,<div>Hello, World!</div>"
 		DataURL dataurl = DataURL.parse(input)
 		//println dataurl.toString()
-		assertThat(dataurl.toString(), is('{\"mediatype\":\"text/html; charset=utf-8\",\"isBase64encoded\":false,\"data\":\"<div>Hello, World!</div>\"}'))
+		assertThat(dataurl.toString(), is('data:text/html; charset=utf-8,<div>Hello, World!</div>'))
 	}
 
 	@Test
@@ -73,5 +73,14 @@ class DataURLTest {
 		assertThat(dataurlB2.hashCode(), is(dataurlB1.hashCode()))
 		//
 		assertThat(dataurlA1.hashCode(), is(not(dataurlB1.hashCode())))
+	}
+	
+	@Test
+	void test_transit() {
+		String input = "data:text/html;charset=utf-8,<div>Hello, World!</div>"
+		String fileURL = DataURL.transit(input)
+		assertThat(fileURL, startsWith('file:'))
+		assertThat(fileURL, endsWith('.html'))
+		
 	}
 }

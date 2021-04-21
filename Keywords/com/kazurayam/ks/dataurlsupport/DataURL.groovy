@@ -1,10 +1,12 @@
 package com.kazurayam.ks.dataurlsupport
 
+import java.nio.file.Files
+import java.nio.file.Path
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import java.nio.file.Files
+
 import com.google.common.net.MediaType
-import java.nio.file.Path
+import java.nio.charset.StandardCharsets
 
 public class DataURL {
 
@@ -33,6 +35,11 @@ public class DataURL {
 			throw new IllegalArgumentException("input string \'${str}\' does not match regex \'${p.toString()}\'")
 		}
 	}
+	
+	static String transit(String str) {
+		DataURL dataURL = DataURL.parse(str)
+		return dataURL.toTempFileURLString()
+	}
 
 	DataURL(MediaType mediaType, Boolean isBase64encoded, String data) {
 		Objects.requireNonNull(mediaType)
@@ -45,7 +52,7 @@ public class DataURL {
 	MediaType getMediaType() {
 		return mediaType
 	}
-	
+
 	Boolean isBase64encoded() {
 		return isBase64encoded
 	}
@@ -57,18 +64,13 @@ public class DataURL {
 	@Override
 	String toString() {
 		StringBuilder sb = new StringBuilder()
-		sb.append("{")
-		sb.append('"mediatype":"')
+		sb.append("data:")
 		sb.append(this.getMediaType().toString())
-		sb.append('"')
-		sb.append(',')
-		sb.append('"isBase64encoded":')
-		sb.append(this.isBase64encoded())
-		sb.append(',')
-		sb.append('"data":"')
+		if (this.isBase64encoded()) {
+			sb.append(";base64")
+		}
+		sb.append(",")
 		sb.append(this.getData())
-		sb.append('"')
-		sb.append("}")
 		return sb.toString()
 	}
 
@@ -93,9 +95,29 @@ public class DataURL {
 	 * 
 	 * @return
 	 */
-	URL toTempFile() {
-		String prefix = null
-		String suffix = '.tmp'
+	File toTempFile() {
+		String prefix = 'DataURL'
+		String suffix = '.' + FileExtensions.get(this.mediaType).getExt()
 		Path tempFile = Files.createTempFile(prefix, suffix)
+		Files.write(tempFile, data.getBytes(StandardCharsets.UTF_8))
+		return tempFile.toFile()
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	URL toTempFileURL() {
+		return toTempFile().toURI().toURL()
+	}
+	
+	/**
+	 * 
+	 * @return e.g. 'file:/var/folders/7m/lm7d6nx51kj0kbtnsskz6r3m0000gn/T/DataURL1608147919965481881.html' on Mac
+	 */
+	String toTempFileURLString() {
+		return toTempFileURL().toExternalForm()
+	}
+	
+	
 }
