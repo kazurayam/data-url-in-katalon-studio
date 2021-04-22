@@ -1,4 +1,3 @@
-import com.kazurayam.ks.dataurlsupport.DesktopDemo
+import com.kazurayam.ks.dataurlsupport.DataURL
 
-DesktopDemo instance = new DesktopDemo()
-instance.execute()
+DataURL.main()
