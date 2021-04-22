@@ -7,6 +7,7 @@ import java.util.regex.Pattern
 
 import com.google.common.net.MediaType
 import java.nio.charset.StandardCharsets
+import java.util.Base64
 
 public class DataURL {
 
@@ -35,10 +36,15 @@ public class DataURL {
 			throw new IllegalArgumentException("input string \'${str}\' does not match regex \'${p.toString()}\'")
 		}
 	}
+
 	
-	static String transit(String str) {
+	static String transfer(String str) {
 		DataURL dataURL = DataURL.parse(str)
 		return dataURL.toTempFileURLString()
+	}
+
+	String transit() {
+		return this.toTempFileURLString()
 	}
 
 	DataURL(MediaType mediaType, Boolean isBase64encoded, String data) {
@@ -59,6 +65,14 @@ public class DataURL {
 
 	String getData() {
 		return data
+	}
+
+	byte[] getDataBytes() {
+		if (this.isBase64encoded()) {
+			return Base64.getDecoder().decode(this.getData())
+		} else {
+			return this.getData().getBytes(StandardCharsets.UTF_8)
+		}
 	}
 
 	@Override
@@ -99,10 +113,10 @@ public class DataURL {
 		String prefix = 'DataURL'
 		String suffix = '.' + FileExtensions.get(this.mediaType).getExt()
 		Path tempFile = Files.createTempFile(prefix, suffix)
-		Files.write(tempFile, data.getBytes(StandardCharsets.UTF_8))
+		Files.write(tempFile, this.getDataBytes())
 		return tempFile.toFile()
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -110,7 +124,7 @@ public class DataURL {
 	URL toTempFileURL() {
 		return toTempFile().toURI().toURL()
 	}
-	
+
 	/**
 	 * 
 	 * @return e.g. 'file:/var/folders/7m/lm7d6nx51kj0kbtnsskz6r3m0000gn/T/DataURL1608147919965481881.html' on Mac
@@ -118,6 +132,4 @@ public class DataURL {
 	String toTempFileURLString() {
 		return toTempFileURL().toExternalForm()
 	}
-	
-	
 }

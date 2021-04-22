@@ -3,7 +3,6 @@ package com.kazurayam.ks.dataurlsupport
 import java.awt.image.BufferedImage
 
 import javax.imageio.ImageIO;
-import javax.xml.bind.DatatypeConverter;
 
 import com.google.common.net.MediaType
 
@@ -20,7 +19,7 @@ class DataURLFactory {
 		mediaType == MediaType.GIF) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(image, mediaType.subtype, baos);
-			String dataBody = DatatypeConverter.printBase64Binary(baos.toByteArray());
+			String dataBody = Base64.getEncoder().encodeToString(baos.toByteArray());
 			DataURL dataURL = DataURL.parse("data:" + mediaType.toString() + ";base64," + dataBody);
 			return dataURL
 		} else {
