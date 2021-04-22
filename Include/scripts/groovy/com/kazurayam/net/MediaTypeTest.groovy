@@ -21,11 +21,19 @@ public class MediaTypeTest {
 	}
 
 	@Test
-	void test_parse() {
+	void test_parse_html_withCharset() {
 		MediaType mt = MediaType.parse('text/html; charset=utf-8')
 		assertThat(mt.type, is('text'))
 		assertThat(mt.subtype, is('html'))
 		assertThat(mt.charset().isPresent(), is(true))
 		assertThat(mt.charset().get().toString().toLowerCase(), is('utf-8'))
+	}
+	
+	@Test
+	void test_parse_text_noCharset() {
+		MediaType mt = MediaType.parse("text/plain")
+		assertThat(mt.type, is('text'))
+		assertThat(mt.subtype, is('plain'))
+		assertThat(mt.charset().isPresent(), is(false))
 	}
 }

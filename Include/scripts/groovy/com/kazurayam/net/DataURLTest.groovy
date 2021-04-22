@@ -82,4 +82,18 @@ class DataURLTest {
 		assertThat(fileURL, startsWith('file:'))
 		assertThat(fileURL, endsWith('.html'))
 	}
+	
+	@Test
+	/** 
+	 * verifying if the exmaples listed at 
+	 * https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
+	 * are supported.
+	 */
+	void test_transfer_mozzila_examples() {
+		assertThat(DataURL.transfer("data:,Hello%2C%20World!"),								startsWith('file:'))
+		assertThat(DataURL.transfer("data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=="),			startsWith('file:'))
+		assertThat(DataURL.transfer("data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E"),	startsWith('file:'))
+		assertThat(DataURL.transfer("data:text/html,<script>alert('hi');</script>"),		startsWith('file:'))
+	}
+
 }

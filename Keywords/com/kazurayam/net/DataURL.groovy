@@ -1,24 +1,15 @@
 package com.kazurayam.net
 
+import java.awt.*;
 import java.awt.image.BufferedImage
-
-import javax.imageio.ImageIO;
-
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-import com.google.common.net.MediaType
-import java.nio.charset.StandardCharsets
-import java.util.Base64
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.nio.file.Files
 import javax.imageio.ImageIO;
-import javax.xml.bind.DatatypeConverter;
 
-// enum of MIME TYPEs maintained, see https://guava.dev/releases/17.0/api/docs/com/google/common/net/MediaType.html
 import com.google.common.net.MediaType
 
 /**
@@ -30,12 +21,9 @@ import com.google.common.net.MediaType
  */
 public class DataURL {
 
-	private MediaType mediaType = null
+	private MediaType mediaType
 	private Boolean isBase64encoded = false
-	private String data = null
-
-	private static final String pattern = "^data:\\s*([\\s\\w\\.\\+\\-/\\*]+\\s*(;\\s*charset=utf-8)?)(;\\s*(base64))?\\s*,(.+)\$"
-
+	private String data
 
 	// short-hand method for test scripts  ----------------------------
 	/**
@@ -79,14 +67,19 @@ public class DataURL {
 	 * 
 	 * @param dataurl
 	 */
+	private static final String pattern = "^data:\\s*(([\\w\\.\\+\\-/\\*]+)?\\s*(;\\s*charset=(utf-8|US-ASCII))?)?(;\\s*(base64))?\\s*,(.+)\$"
+	
 	static DataURL parse(String dataurl) {
 		Objects.requireNonNull(dataurl)
 		Pattern p = Pattern.compile(pattern)
 		Matcher m = p.matcher(dataurl)
 		if (m.matches()) {
-			MediaType mt = MediaType.parse(m.group(1))
-			String base64encode = m.group(4)
-			String d = URLDecoder.decode(m.group(5), 'utf-8')
+			MediaType mt = MediaType.PLAIN_TEXT_UTF_8
+			if (m.group(2) != null) {
+				mt = MediaType.parse(m.group(1))
+			}
+			String base64encode = m.group(6)
+			String d = URLDecoder.decode(m.group(7), 'utf-8')
 			return new DataURL(mt, ('base64' == base64encode), d)
 		} else {
 			throw new IllegalArgumentException("input string \'${dataurl}\' does not match regex \'${p.toString()}\'")
@@ -145,6 +138,9 @@ public class DataURL {
 	 * @return e.g 'file:/var/folders/7m/lm7d6nx51kj0kbtnsskz6r3m0000gn/T/DataURL1608147919965481881.html' as an instance of File
 	 */
 	File toTempFile() {
+		if (! FileExtensions.containsKey(this.mediaType)) {
+			throw new IllegalStateException("mediaType \'${this.mediaType.toString()}\' is not supported by FileExtensions")
+		}
 		String prefix = 'DataURL'
 		String suffix = '.' + FileExtensions.get(this.mediaType).getExt()
 		Path tempFile = Files.createTempFile(prefix, suffix)
@@ -189,7 +185,11 @@ public class DataURL {
 		if (this.isBase64encoded()) {
 			return Base64.getDecoder().decode(this.getData())
 		} else {
-			return this.getData().getBytes(StandardCharsets.UTF_8)
+			if (this.getMediaType().charset().isPresent()) {
+				return this.getData().getBytes(this.getMediaType().charset().get())
+			} else {
+				return this.getData().getBytes(StandardCharsets.UTF_8)
+			}
 		}
 	}
 
@@ -225,7 +225,7 @@ public class DataURL {
 		return Objects.hash(mediaType, isBase64encoded, data)
 	}
 
-	
+
 	/**
 	 * Demonstration how to use DataURL class.
 	 * 
@@ -238,29 +238,29 @@ public class DataURL {
 	static void main(String[] args) throws Exception {
 		// create a demo image
 		BufferedImage image = createDemoImage()
-		
+
 		// convert the image to a dataURL
 		DataURL dataURL = DataURL.toImageDataURL(MediaType.PNG, image)
-		
+
 		// write the HTML which renders the dataURL of PNG
 		String html = "<html><body><img src='" + dataURL.toString() + "'></body></html>"
-		
+
 		// write the HTML to a file
 		File f = File.createTempFile('DesktopDemo', '.html')
 		FileWriter fw = new FileWriter(f)
 		fw.write(html)
 		fw.flush()
 		fw.close()
-		
+
 		// display the HTML
 		Desktop.getDesktop().open(f);
 	}
-		
+
 	static BufferedImage createDemoImage() {
 		int sz = 200;
 		BufferedImage image = new BufferedImage(
 				sz, sz, BufferedImage.TYPE_INT_ARGB);
-		
+
 		// paint the image..
 		Graphics2D g = image.createGraphics();
 		g.setRenderingHint(
@@ -272,6 +272,6 @@ public class DataURL {
 		}
 		g.dispose();
 		return image
-	}		
+	}
 
 }
