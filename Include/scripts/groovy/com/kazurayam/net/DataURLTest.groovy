@@ -1,4 +1,4 @@
-package com.kazurayam.ks.dataurlsupport
+package com.kazurayam.net
 
 import static org.hamcrest.CoreMatchers.*
 import static org.junit.Assert.*

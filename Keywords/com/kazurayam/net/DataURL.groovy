@@ -1,4 +1,4 @@
-package com.kazurayam.ks.dataurlsupport
+package com.kazurayam.net
 
 import java.awt.image.BufferedImage
 

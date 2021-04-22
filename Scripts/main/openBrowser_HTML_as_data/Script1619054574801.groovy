@@ -1,4 +1,4 @@
-import com.kazurayam.ks.dataurlsupport.DataURL
+import com.kazurayam.net.DataURL
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 String html = '''<html>

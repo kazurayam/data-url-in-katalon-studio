@@ -1,4 +1,4 @@
 import static com.kazurayam.junit4ks.JUnitCustomKeywords.runWithJUnitRunner
-import com.kazurayam.ks.dataurlsupport.DataURLTest
+import com.kazurayam.net.DataURLTest
 
 runWithJUnitRunner(DataURLTest.class)

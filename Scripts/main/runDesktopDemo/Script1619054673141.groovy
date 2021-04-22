@@ -1,3 +1,3 @@
-import com.kazurayam.ks.dataurlsupport.DataURL
+import com.kazurayam.net.DataURL
 
 DataURL.main()

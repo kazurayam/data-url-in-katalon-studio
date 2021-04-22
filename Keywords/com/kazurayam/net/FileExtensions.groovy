@@ -1,4 +1,4 @@
-package com.kazurayam.ks.dataurlsupport
+package com.kazurayam.net
 
 import com.google.common.net.MediaType
 
@@ -13,7 +13,6 @@ public class FileExtensions {
 		fileExtensions.put(MediaType.PLAIN_TEXT_UTF_8,	new FileExtension('txt',	"Plain text"))
 		fileExtensions.put(MediaType.PNG,				new FileExtension('png',	"Portable Network Graphics"))
 		fileExtensions.put(MediaType.XML_UTF_8,			new FileExtension('xml',	"XML"))
-		fileExtensions.put(MediaType.ZIP,				new FileExtension('zip',	"ZIP archive"))
 	}
 
 	static FileExtension get(MediaType mediaType) {
