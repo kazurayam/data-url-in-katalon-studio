@@ -68,7 +68,7 @@ public class DataURL {
 	 * @param dataurl
 	 */
 	private static final String pattern = "^data:\\s*(([\\w\\.\\+\\-/\\*]+)?\\s*(;\\s*charset=(utf-8|US-ASCII))?)?(;\\s*(base64))?\\s*,(.+)\$"
-	
+
 	static DataURL parse(String dataurl) {
 		Objects.requireNonNull(dataurl)
 		Pattern p = Pattern.compile(pattern)
