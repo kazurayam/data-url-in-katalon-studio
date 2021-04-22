@@ -2,7 +2,7 @@ package com.kazurayam.ks.dataurlsupport
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
+import java.nio.file.Files
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 
@@ -24,13 +24,13 @@ public class DesktopDemo {
 		BufferedImage image = createDemoImage()
 
 		// convert the image to a dataURL
-		DataURL dataURL = DataURLFactory.toImageDataURL(MediaType.PNG, image)
+		DataURL dataURL = DataURL.toImageDataURL(MediaType.PNG, image)
 
 		// write the HTML which renders the dataURL of PNG
 		String html = "<html><body><img src='" + dataURL.toString() + "'></body></html>"
 
 		// write the HTML to a file
-		File f = new File("image.html")
+		File f = File.createTempFile('DesktopDemo', '.html')
 		FileWriter fw = new FileWriter(f)
 		fw.write(html)
 		fw.flush()

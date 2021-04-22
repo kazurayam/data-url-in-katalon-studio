@@ -26,6 +26,6 @@ public class MediaTypeTest {
 		assertThat(mt.type, is('text'))
 		assertThat(mt.subtype, is('html'))
 		assertThat(mt.charset().isPresent(), is(true))
-		assertThat(mt.charset().get(), is('utf-8'))
+		assertThat(mt.charset().get().toString().toLowerCase(), is('utf-8'))
 	}
 }

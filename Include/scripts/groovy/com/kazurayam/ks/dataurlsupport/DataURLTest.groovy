@@ -74,13 +74,12 @@ class DataURLTest {
 		//
 		assertThat(dataurlA1.hashCode(), is(not(dataurlB1.hashCode())))
 	}
-	
+
 	@Test
-	void test_transit() {
+	void test_transfer() {
 		String input = "data:text/html;charset=utf-8,<div>Hello, World!</div>"
-		String fileURL = DataURL.transit(input)
+		String fileURL = DataURL.transfer(input)
 		assertThat(fileURL, startsWith('file:'))
 		assertThat(fileURL, endsWith('.html'))
-		
 	}
 }
