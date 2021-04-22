@@ -143,9 +143,15 @@ public class DataURL {
 		}
 		String prefix = 'DataURL'
 		String suffix = '.' + FileExtensions.get(this.mediaType).getExt()
-		Path tempFile = Files.createTempFile(prefix, suffix)
-		Files.write(tempFile, this.getDataBytes())
-		return tempFile.toFile()
+		Path temp = Files.createTempFile(prefix, suffix)
+		
+		// the temporary file will be deleted when the program finished
+		//temp.toFile().deleteOnExit()
+		
+		// save the data into the temp file
+		Files.write(temp, this.getDataBytes())
+		
+		return temp.toFile()
 	}
 
 

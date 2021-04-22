@@ -27,7 +27,7 @@
       <guid>afd89fb9-9cd4-4c48-90b7-b01362278328</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/main/runDesktopDemo</testCaseId>
+      <testCaseId>Test Cases/main/runDataURLmain</testCaseId>
    </testCaseLink>
    <testCaseLink>
       <guid>026a9baa-f57f-40c6-befa-90b690171789</guid>

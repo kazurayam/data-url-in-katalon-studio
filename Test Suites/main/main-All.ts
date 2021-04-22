@@ -27,6 +27,6 @@
       <guid>0bf65823-1cad-4849-8647-e8426951d425</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/main/runDesktopDemo</testCaseId>
+      <testCaseId>Test Cases/main/runDataURLmain</testCaseId>
    </testCaseLink>
 </TestSuiteEntity>
