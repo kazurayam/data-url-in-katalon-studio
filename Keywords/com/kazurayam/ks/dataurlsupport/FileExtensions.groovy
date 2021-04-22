@@ -23,4 +23,31 @@ public class FileExtensions {
 	static Set<MediaType> supportedMediaTypes() {
 		return fileExtensions.keySet()
 	}
+	
+	
+	
+	/**
+	 * a HTML file "index.html" has a FileExtension 'html' (no . included)
+	 * a PNG file "image.png" has a FileExtension 'png'
+	 *  
+	 * @author kazurayam
+	 */
+	static class FileExtension {
+		
+		private String ext
+		private String description
+		
+		FileExtension(String ext, String description) {
+			this.ext = ext
+			this.description = description
+		}
+		
+		String getExt() {
+			return this.ext
+		}
+		
+		String getDescriptionn() {
+			return this.description
+		}
+	}
 }
