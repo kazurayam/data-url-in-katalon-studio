@@ -62,7 +62,7 @@ One line of `import` statement, and one line of `dataurl.enable()`. That's all. 
 
 [`Test Cases/research/3_webui_enabledTo_navigateTo_data_html`](Scripts/research/3_webui_enabledTo_navigateTo_data_html/Script1619174550245.groovy)
 ```
-import com.kazurayam.ks.util.DataURLEnablerKeyword as dataurl
+import com.kazurayam.ks.util.DataURLEnabler as dataurl
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 // enable WebUI.openBrowser() and WebUI.navigateToURL() to accept 'data:' URI
@@ -78,7 +78,7 @@ WebUI.closeBrowser()
 
 [`Test Cases/research/4_webui_enabledTo_navigateTo_data_png`](Scripts/research/4_webui_enabledTo_navigateTo_data_png/Script1619174581290.groovy)
 ```
-import com.kazurayam.ks.util.DataURLEnablerKeyword as dataurl
+import com.kazurayam.ks.util.DataURLEnabler as dataurl
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 // create a "data:image/png;base64,xxxxxxxxxxxxxxx" for demo
