@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>2_webdriver_navigate_data</name>
+   <name>2_webdriver_capableTo_navigateTo_data</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>c78ea089-98e7-4e11-a79c-1220a231d0a4</testCaseGuid>

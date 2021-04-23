@@ -9,7 +9,7 @@ import javax.imageio.ImageIO
  * 
  * @author kazurayam
  */
-public class DataURLEnablerKeyword {
+public class DataURLEnabler {
 
 	@Keyword
 	static void enable() {
