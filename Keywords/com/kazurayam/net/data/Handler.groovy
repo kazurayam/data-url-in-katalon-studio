@@ -8,8 +8,9 @@ package com.kazurayam.net.data
 public class Handler extends URLStreamHandler {
 
 	/**
-	 * we need to implment URL.openConnection() method here.
-	 * but will not use it in Katalon Studio.
+	 * we need to implment openConnection() method here in order to make this Handler class instanciate-able.
+	 *
+	 * But we will not use URL.openConnection() for data: URL in Katalon Studio.
 	 * We only use URL.toString() method for data: URL.
 	 */
 	@Override
