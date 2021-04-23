@@ -7,6 +7,10 @@ plugins {
   id "com.katalon.gradle-plugin" version "0.0.6"
 }
 
+group    = 'com.kazurayam'
+archivesBaseName = 'katalon-studio-data-url'
+version  = '0.1.0'
+
 repositories {
   jcenter()
   mavenCentral()
@@ -15,7 +19,7 @@ repositories {
 sourceSets {
   main {
     groovy {
-      srcDirs = ['Keywords', 'Libs', 'Test Listeners', 'Include/scripts/groovy']
+      srcDirs = ['Keywords']
     }
   }
 }
