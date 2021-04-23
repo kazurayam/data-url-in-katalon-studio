@@ -31,7 +31,7 @@ They expect to see a view in browser like this:
 
 ![1_want_to_see_this](docs/images/1_want_to_see_this.png)
 
-But when they execute the above test case script, they will see following result, which is obviously disappointing:
+But when they execute the above test case script in Katalon Studio v7.9.1, they will see following result, which is obviously disappointing:
 
 ![2_actually_seen](docs/images/2_actually_seen.png)
 
@@ -49,11 +49,14 @@ I have found out a way to enable Katalon Studio to support Data URL. I have deve
 
 - visit [Releases](https://github.com/kazurayam/katalon-studio-data-url/releases/) page, download the most up-to-date version of `katalon-studio-data-urlo`
 - create your Katalon Studio project, which has `Plugins` directory under the project directory.
-- locate the downloaded jar file in the `Plugins` direcgtory.
+- locate the downloaded jar file in the `Plugins` directory.
+- close/reopen your project to let Katalon Studio acknowledge the jar.
 
 You are done.
 
 ## How to write your Test Case
+
+One line of `import` statement, and one line of `dataurl.enable()`. That's all. The WebUI keyword will be enabled for data URLs.
 
 ### WebUI.openBrowser() is enabled to open 'data:text/html'
 
@@ -68,7 +71,7 @@ dataurl.enable()
 WebUI.openBrowser("data:text/html,<h1>Hello, world!</h1>")
 
 WebUI.delay(5)
-//WebUI.closeBrowser()
+WebUI.closeBrowser()
 ```
 
 ### WebUI.navigateToUrl() enabled to open 'data:image/png'
@@ -135,13 +138,15 @@ It is just constructing an instance of `java.net.URL` class:
             ...
 ```
 
-QUESTION: Does the default implementation of [`java.net.URL`](https://docs.oracle.com/javase/7/docs/api/java/net/URL.html#URL(java.lang.String,%20java.lang.String,%20int,%20java.lang.String) support Data URL?
+### Dialogue
 
-ANSWER: No, it doesn't. As the javadoc clearly states, the default implementation supports only http, https, ftp, file, and jar.
+Me: Does the default implementation of [`java.net.URL`](https://docs.oracle.com/javase/7/docs/api/java/net/URL.html#URL) support Data URL? Can I instanciate it with `new URL("data:text/html,Hello world!")`?
 
-NEXT QUESTION: Is it possible to instanciate `java.net.URL` with `data:` URL somehow?
+Guru: No, it doesn't. As the javadoc clearly states, the default implementation supports only http, https, ftp, file, and jar.
 
-ANSWER: Yes, it is possible. The [javadoc of the constructor of `java.net.URL`](https://docs.oracle.com/javase/7/docs/api/java/net/URL.html#URL(java.lang.String,%20java.lang.String,%20int,%20java.lang.String)) clearly describes it.
+Me: Is it possible to let `java.net.URL` instanciated with with `data:` URL somehow?
+
+Guru: Yes, it is possible. The [javadoc of the constructor of `java.net.URL`](https://docs.oracle.com/javase/7/docs/api/java/net/URL.html#URL(java.lang.String,%20java.lang.String,%20int,%20java.lang.String)) clearly describes how to.
 
 ## How the plugin is implemented
 
