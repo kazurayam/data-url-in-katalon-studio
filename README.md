@@ -54,7 +54,7 @@ You are done.
 
 ## How to write your Test Case
 
-In a Test Case script in the Script mode, add one line of `import` statement, and one line of `dataurl.enable()`. That's all. The WebUI keyword will be enabled for `data:` URLs.
+In a Test Case script in the Script mode, add one line of `import` statement and one line of `dataurl.enable()` before calling `WebUI.openBrowser(String)` and `WebUI.navigateToUrl(String)`. That's all. The WebUI keywords will be enabled for `data:` URLs.
 
 Let me show you some examples.
 
