@@ -138,7 +138,7 @@ It is just constructing an instance of `java.net.URL` class:
             ...
 ```
 
-I consulted to my Guru called Google.
+I consulted with Guru Google.
 
 *Me*: Does the default implementation of [`java.net.URL`](https://docs.oracle.com/javase/7/docs/api/java/net/URL.html#URL) support Data URL? Can I instanciate it with `new URL("data:text/html,Hello world!")`?
 
